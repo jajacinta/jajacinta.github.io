@@ -20,65 +20,273 @@
       "operatingSystem": "All"
     }
     </script>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #121212; color: #e0e0e0; padding: 10px; margin: 0; }
-        .container { max-width: 900px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { text-align: center; color: #f0e68c; letter-spacing: 1px; margin-bottom: 5px; }
-        .subtitle { text-align: center; font-size: 0.8em; color: #888; margin-bottom: 15px; }
-        /* Style for the new visible website description */
-        .site-description { text-align: center; font-size: 0.95em; color: #b0b0b0; max-width: 700px; margin: 0 auto 25px auto; line-height: 1.5; }
-        
-        .inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #252525; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
-        label { color: #4A90E2; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; background: #121212; border: 1px solid #444; border-radius: 8px; color: #fff; font-size: 16px; box-sizing: border-box; margin-top: 5px; }
-        select { cursor: pointer; font-size: 14px; }
-        button { width: 100%; padding: 15px; background: #4A90E2; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 16px; box-shadow: 0 4px 0 #2a6db8; }
 
-        .scroll-wrapper { overflow-x: auto; margin: 20px 0; border-radius: 10px; border: 1px solid #333; }
-        table { border-collapse: collapse; width: 100%; min-width: 400px; }
-        th, td { border: 1px solid #333; text-align: center; padding: 12px 8px; font-size: 12px; font-weight: bold; }
-        th { background: #252525; color: #4A90E2; }
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Brand Colors & Core Styles --- */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #161513; /* Warm, organic charcoal instead of harsh digital black */
+            color: #e3e1dc; 
+            padding: 15px; 
+            margin: 0; 
+            -webkit-font-smoothing: antialiased;
+        }
         
+        .container { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            background: #211f1c; /* Soft dark brown-gray card background */
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+            border: 1px solid #2e2b27;
+        }
+
+        /* --- Typography Overhaul --- */
+        h1, h2, h3, h4, summary { 
+            font-family: 'DM Serif Display', serif; 
+            letter-spacing: 0.3px;
+        }
+        
+        h1 { 
+            text-align: center; 
+            color: #f7e7ad; /* Creamy warm yellow instead of bright neon khaki */
+            margin-bottom: 8px; 
+            font-size: 2.6rem;
+        }
+        
+        h2 { 
+            color: #f7e7ad; 
+            font-size: 1.4rem; 
+            margin-top: 25px; 
+            margin-bottom: 10px; 
+        }
+
+        .subtitle { 
+            text-align: center; 
+            font-size: 0.85em; 
+            color: #a39f97; 
+            margin-bottom: 25px; 
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+        
+        .site-description { 
+            text-align: center; 
+            font-size: 1rem; 
+            color: #c2beb6; 
+            max-width: 700px; 
+            margin: 0 auto 30px auto; 
+            line-height: 1.6; 
+        }
+        
+        /* --- Inputs & Forms --- */
+        .inputs { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            background: #2a2723; 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 25px; 
+            border: 1px solid #3b3732; 
+        }
+        
+        label { 
+            color: #c2ba9d; /* Muted straw tone instead of generic software blue */
+            font-size: 12px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        input, select { 
+            font-family: 'Inter', sans-serif;
+            width: 100%; 
+            padding: 12px 14px; 
+            background: #161513; 
+            border: 1px solid #423e38; 
+            border-radius: 8px; 
+            color: #fff; 
+            font-size: 15px; 
+            box-sizing: border-box; 
+            margin-top: 8px; 
+            transition: border-color 0.2s ease;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #f7e7ad;
+        }
+        
+        select { cursor: pointer; }
+        
+        button { 
+            font-family: 'Inter', sans-serif;
+            width: 100%; 
+            padding: 16px; 
+            background: #556b2f; /* Deep Olive Green instead of generic bootstrap blue */
+            color: #ffffff; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            font-size: 16px; 
+            transition: background 0.2s ease, transform 0.1s ease;
+            box-shadow: none;
+        }
+        
+        button:hover {
+            background: #6b8e23;
+        }
+
+        button:active {
+            transform: scale(0.99);
+        }
+
+        /* --- Custom Tables --- */
+        .scroll-wrapper { 
+            overflow-x: auto; 
+            margin: 30px 0; 
+            border-radius: 12px; 
+            border: 1px solid #3b3732; 
+        }
+        
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            min-width: 400px; 
+            font-family: 'Inter', sans-serif;
+        }
+        
+        th, td { 
+            border: 1px solid #3b3732; 
+            text-align: center; 
+            padding: 14px 10px; 
+            font-size: 13px; 
+            font-weight: 600; 
+        }
+        
+        th { 
+            background: #2a2723; 
+            color: #f7e7ad; 
+            font-family: 'DM Serif Display', serif;
+            font-size: 15px;
+            font-weight: normal;
+        }
+        
+        /* --- Visual Map & Components --- */
         .egg-visual-grid { 
             display: grid; 
             grid-template-columns: repeat(4, 1fr); 
-            gap: 10px; 
+            gap: 12px; 
             margin: 20px 0;
-            background: #252525;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #333;
+            background: #2a2723;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #3b3732; 
             max-width: 250px;
             margin-left: auto;
             margin-right: auto;
         }
+        
         .egg-icon { 
             aspect-ratio: 1/1.3; 
             border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%; 
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: inset -2px -4px 6px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset -4px -6px 10px rgba(0,0,0,0.35), 2px 4px 8px rgba(0,0,0,0.2);
         }
 
-        .results-list { display: flex; flex-direction: column; gap: 10px; }
-        .bar-container { background: #121212; border-radius: 20px; height: 30px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid #333; }
+        .results-list { display: flex; flex-direction: column; gap: 12px; }
+        
+        .bar-container { 
+            background: #161513; 
+            border-radius: 20px; 
+            height: 36px; 
+            position: relative; 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            border: 1px solid #3b3732; 
+        }
+        
         .bar-fill { height: 100%; transition: width 0.8s ease-in-out; }
-        .bar-label { position: absolute; left: 12px; font-size: 13px; font-weight: bold; }
-        .bar-percent { position: absolute; right: 12px; font-size: 12px; font-weight: bold; color: #fff; }
+        .bar-label { position: absolute; left: 16px; font-size: 13px; font-weight: 600; }
+        .bar-percent { position: absolute; right: 16px; font-size: 13px; font-weight: 600; color: #fff; }
 
-        /* Styles for the Collapsible Dropdowns */
-        details { background: #252525; border: 1px solid #333; border-radius: 10px; margin: 15px 0; padding: 10px; transition: background 0.3s ease; }
-        details[open] { background: #2a2a2a; padding: 15px; }
-        summary { font-weight: bold; color: #f0e68c; cursor: pointer; padding: 5px; font-size: 1rem; outline: none; user-select: none; }
-        .tutorial-content { margin-top: 15px; font-size: 0.9em; line-height: 1.6; color: #ccc; }
-        .tutorial-content h4 { color: #4A90E2; margin: 15px 0 5px 0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-        .mini-grid-wrap { overflow-x: auto; margin: 10px 0; border-radius: 6px; border: 1px solid #444; }
+        /* --- Collapsible Accordions --- */
+        details { 
+            background: #2a2723; 
+            border: 1px solid #3b3732; 
+            border-radius: 12px; 
+            margin: 20px 0; 
+            padding: 14px; 
+            transition: background 0.3s ease; 
+        }
+        
+        details[open] { background: #2d2925; padding: 20px; }
+        
+        summary { 
+            font-weight: normal; 
+            color: #f7e7ad; 
+            cursor: pointer; 
+            padding: 5px; 
+            font-size: 1.1rem; 
+            outline: none; 
+            user-select: none; 
+        }
+        
+        .tutorial-content { 
+            margin-top: 15px; 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+            color: #c2beb6; 
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tutorial-content h4 { 
+            color: #c2ba9d; 
+            margin: 20px 0 5px 0; 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            letter-spacing: 1px; 
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+        
+        .mini-grid-wrap { 
+            overflow-x: auto; 
+            margin: 15px 0; 
+            border-radius: 8px; 
+            border: 1px solid #423e38; 
+        }
+        
         .mini-grid-wrap table { min-width: 250px; }
-        .mini-grid-wrap th { background: #1c1c1c; font-size: 11px; }
-        .mini-grid-wrap td { font-size: 11px; padding: 8px; background: #121212; color: #fff; }
+        .mini-grid-wrap th { background: #1c1a18; font-size: 12px; color: #c2ba9d; }
+        .mini-grid-wrap td { font-size: 12px; padding: 10px; background: #161513; color: #fff; }
 
-        /* Breed helper specific container style */
-        .breed-helper-ui { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
-        .search-input { margin-bottom: 5px; padding: 8px; font-size: 13px; background: #1a1a1a; border: 1px solid #444; border-radius: 6px; color: #fff; box-sizing: border-box; width: 100%; }
+        /* --- Breed Helper Dropdowns --- */
+        .breed-helper-ui { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 15px; }
+        
+        .search-input { 
+            margin-bottom: 5px; 
+            padding: 10px; 
+            font-size: 14px; 
+            background: #161513; 
+            border: 1px solid #423e38; 
+            border-radius: 6px; 
+            color: #fff; 
+            box-sizing: border-box; 
+            width: 100%; 
+        }
+        
         @media (min-width: 600px) {
             .breed-helper-ui { grid-template-columns: 1fr 2fr 2fr; }
         }
@@ -89,7 +297,7 @@
 <main>
     <div class="container">
         <h1>Egg Colour Calculator</h1>
-        <div class="subtitle">ww = White Shell Gene |  WW/Ww = Blue Shell Gene | BB/Bb = Tan/Brown Topcoat (Bb = Green, BB = Olive)</div>
+        <div class="subtitle">ww = White Shell Gene | WW/Ww = Blue Shell Gene | BB/Bb = Tan/Brown Topcoat (Bb = Green, BB = Olive)</div>
         
         <p class="site-description">
             Punnett Square Calculator that will calculate all possible chicken egg colours that offspring could lay based on parental genotypes. Will generate a 2x2, 4x4 or 8x8 Punnett Square, visual egg colour map and probabilities.
@@ -168,10 +376,10 @@
         <div class="scroll-wrapper" id="square-output"></div>
 
         <div id="results-area">
-            <h3 style="text-align: center; color: #f0e68c; font-size: 1.1em; margin-bottom: 5px;">Egg Colour Map</h3>
+            <h3 style="text-align: center; color: #f7e7ad; font-size: 1.4rem; margin-bottom: 10px;">Egg Colour Map</h3>
             <div class="egg-visual-grid" id="egg-grid"></div>
             
-            <h3 style="color: #f0e68c; font-size: 1.1em; margin-bottom: 10px;"> Statistics</h3>
+            <h3 style="color: #f7e7ad; font-size: 1.4rem; margin-top: 30px; margin-bottom: 15px;">Statistics</h3>
             <div class="results-list" id="stat-list"></div>
         </div>
     </div>
@@ -282,23 +490,24 @@
     }
 
     function filterDropdown(parentID) {
-    const query = document.getElementById(`${parentID}-search`).value;
-    
-    // 1. Filter the dropdown list elements
-    if (parentID === 'p1') {
-        populateDropdowns(query, document.getElementById('p2-search').value);
-    } else {
-        populateDropdowns(document.getElementById('p1-search').value, query);
-    }
+        const query = document.getElementById(`${parentID}-search`).value;
+        
+        // 1. Filter the dropdown list elements
+        if (parentID === 'p1') {
+            populateDropdowns(query, document.getElementById('p2-search').value);
+        } else {
+            populateDropdowns(document.getElementById('p1-search').value, query);
+        }
 
-    // 2. AUTO-SELECT IF A SINGLE MATCH IS FOUND
-    const dropdown = document.getElementById(`${parentID}-breed-select`);
-    // If there is exactly one breed match available (index 0 is the prompt, index 1 is the breed)
-    if (dropdown.options.length === 2) {
-        dropdown.selectedIndex = 1; // Pick that breed
-        applyBreedSelection(parentID); // Inject genotype and calculate!
+        // 2. AUTO-SELECT IF A SINGLE MATCH IS FOUND
+        const dropdown = document.getElementById(`${parentID}-breed-select`);
+        // If there is exactly one breed match available (index 0 is the prompt, index 1 is the breed)
+        if (dropdown.options.length === 2) {
+            dropdown.selectedIndex = 1; // Pick that breed
+            applyBreedSelection(parentID); // Inject genotype and calculate!
+        }
     }
-}
+    
     function updateBreedHelperValues() {
         // Reset text search bar query strings
         document.getElementById('p1-search').value = "";
