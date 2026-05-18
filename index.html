@@ -64,6 +64,7 @@
 
         /* Breed helper specific container style */
         .breed-helper-ui { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
+        .search-input { margin-bottom: 5px; padding: 8px; font-size: 13px; background: #1a1a1a; border: 1px solid #444; border-radius: 6px; color: #fff; box-sizing: border-box; width: 100%; }
         @media (min-width: 600px) {
             .breed-helper-ui { grid-template-columns: 1fr 2fr 2fr; }
         }
@@ -80,7 +81,7 @@
     </p>
 
     <details>
-        <summary How to Use & Genotype Examples (Click to Expand)</summary>
+        <summary>How to Use & Genotype Examples (Click to Expand)</summary>
         <div class="tutorial-content">
             <p>Type the gene letter combinations for both parents into the input fields below. Depending on how many traits you want to track, you can enter 2, 4, or 6 letters to map different grid scales:</p>
             
@@ -122,20 +123,16 @@
             </div>
             <div>
                 <label>Parent 1 Breed Match</label>
+                <input type="text" id="p1-search" class="search-input" placeholder=" Search Parent 1 Breed..." onkeyup="filterDropdown('p1')">
                 <select id="p1-breed-select" onchange="applyBreedSelection('p1')">
                     <option value="" disabled selected>-- Select Parent 1 Breed --</option>
-                    <option value="placeholder">Breed 1 Placeholder</option>
-                    <option value="placeholder">Breed 2 Placeholder</option>
-                    <option value="placeholder">Breed 3 Placeholder</option>
                 </select>
             </div>
             <div>
                 <label>Parent 2 Breed Match</label>
+                <input type="text" id="p2-search" class="search-input" placeholder=" Search Parent 2 Breed..." onkeyup="filterDropdown('p2')">
                 <select id="p2-breed-select" onchange="applyBreedSelection('p2')">
                     <option value="" disabled selected>-- Select Parent 2 Breed --</option>
-                    <option value="placeholder">Breed 1 Placeholder</option>
-                    <option value="placeholder">Breed 2 Placeholder</option>
-                    <option value="placeholder">Breed 3 Placeholder</option>
                 </select>
             </div>
         </div>
@@ -174,12 +171,135 @@
         brown: { name: "Brown", hex: "#8B4513", text: "#fff" }
     };
 
-    /* --- BEGIN BREED AUTOMATION SCRIPT --- */
-    function updateBreedHelperValues() {
-    // When the user changes the 2x2/4x4/8x8 scale, reset the dropdown selectors
-    document.getElementById('p1-breed-select').selectedIndex = 0;
-    document.getElementById('p2-breed-select').selectedIndex = 0;
+    /* --- ALPHABETIZED BREED DATABASE SOURCE MATRIX --- */
+    const BREED_DATA = [
+        { name: "Ancona", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Andalusian", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Araucana", "2x2": "WW", "4x4": "WWbb", "8x8": "WWbbcc" },
+        { name: "Asil", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Australorp", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Barnevelder", "2x2": "ww", "4x4": "wwBB", "8x8": "wwBBCC" },
+        { name: "Barred Rock", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Blackrock", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Bluebell", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbCc" },
+        { name: "Brahma", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbCc" },
+        { name: "Campine", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Cochin", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Cream Legbar", "2x2": "WW", "4x4": "WWbb", "8x8": "WWbbcc" },
+        { name: "Delaware", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Dominique", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Dorking", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Dutch Bantam", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Faverolle", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Fayoumi", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Friesian", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Gold Legbar", "2x2": "WW", "4x4": "WWbb", "8x8": "WWbbcc" },
+        { name: "Hamburgh/Holland Fowl", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Houdan", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Ixworth", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Japanese Bantam", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Jersey Giant", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbCc" },
+        { name: "La Fleche", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Leghorn (White)", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Leghorn (Green)", "2x2": "Ww", "4x4": "WwBb", "8x8": "WwBbcc" },
+        { name: "Lincolnshire Buff", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Malay", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Marans", "2x2": "ww", "4x4": "wwBB", "8x8": "wwBBCC" },
+        { name: "Minorca", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Nankin", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "New Hampshire Red", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbCc" },
+        { name: "Norfolk Grey", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Orpington", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Pekin Bantam", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Plymouth Rock", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Plymouth Rock Bantam", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Poland", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Rhode Island Red", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbCC" },
+        { name: "Sebright", "2x2": "ww", "4x4": "wwbb", "8x8": "wwbbcc" },
+        { name: "Serama", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Silkie", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Sumatra", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Sussex", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Sussex Bantam", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Vorwerk", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" },
+        { name: "Welsummer", "2x2": "ww", "4x4": "wwBB", "8x8": "wwBBCC" },
+        { name: "Wyandotte", "2x2": "ww", "4x4": "wwBb", "8x8": "wwBbcc" }
+    ];
+
+    /* --- BEGIN BREED AUTOMATION & SEARCH ENGINE SCRIPT --- */
+    function populateDropdowns(filterText1 = "", filterText2 = "") {
+        const scale = document.getElementById('scale-selector').value;
+        const p1Select = document.getElementById('p1-breed-select');
+        const p2Select = document.getElementById('p2-breed-select');
+        
+        // Save current selections to avoid resetting them while searching
+        const currentP1Val = p1Select.value;
+        const currentP2Val = p2Select.value;
+
+        // Reset lists completely except first prompt option
+        p1Select.innerHTML = `<option value="" disabled selected>-- Select Parent 1 Breed --</option>`;
+        p2Select.innerHTML = `<option value="" disabled selected>-- Select Parent 2 Breed --</option>`;
+
+        BREED_DATA.forEach(breed => {
+            const genotypeValue = breed[scale];
+            
+            // Filter and populate for Parent 1
+            if (breed.name.toLowerCase().includes(filterText1.toLowerCase())) {
+                const opt1 = document.createElement('option');
+                opt1.value = genotypeValue;
+                opt1.textContent = breed.name;
+                p1Select.appendChild(opt1);
+            }
+
+            // Filter and populate for Parent 2
+            if (breed.name.toLowerCase().includes(filterText2.toLowerCase())) {
+                const opt2 = document.createElement('option');
+                opt2.value = genotypeValue;
+                opt2.textContent = breed.name;
+                p2Select.appendChild(opt2);
+            }
+        });
+
+        // Restore chosen elements if they are still visible in filtered variants
+        p1Select.value = currentP1Val;
+        p2Select.value = currentP2Val;
+    }
+
+    function filterDropdown(parentID) {
+    const query = document.getElementById(`${parentID}-search`).value;
+    
+    // 1. Filter the dropdown list elements
+    if (parentID === 'p1') {
+        populateDropdowns(query, document.getElementById('p2-search').value);
+    } else {
+        populateDropdowns(document.getElementById('p1-search').value, query);
+    }
+
+    // 2. AUTO-SELECT IF A SINGLE MATCH IS FOUND
+    const dropdown = document.getElementById(`${parentID}-breed-select`);
+    // If there is exactly one breed match available (index 0 is the prompt, index 1 is the breed)
+    if (dropdown.options.length === 2) {
+        dropdown.selectedIndex = 1; // Pick that breed
+        applyBreedSelection(parentID); // Inject genotype and calculate!
+    }
 }
+    function updateBreedHelperValues() {
+        // Reset text search bar query strings
+        document.getElementById('p1-search').value = "";
+        document.getElementById('p2-search').value = "";
+        
+        // Re-render baseline data dropdown contents based on scaling
+        populateDropdowns();
+        
+        const scale = document.getElementById('scale-selector').value;
+        let defaultFill = "WwBb";
+        if (scale === "2x2") defaultFill = "Ww";
+        if (scale === "8x8") defaultFill = "WwBbCc";
+        
+        document.getElementById('p1').value = defaultFill;
+        document.getElementById('p2').value = defaultFill;
+        calculate();
+    }
 
     function applyBreedSelection(parentID) {
         const dropdown = document.getElementById(`${parentID}-breed-select`);
@@ -189,7 +309,10 @@
             calculate();
         }
     }
-    /* --- END BREED AUTOMATION SCRIPT --- */
+    
+    // Initial build execution call
+    populateDropdowns();
+    /* --- END BREED AUTOMATION & SEARCH ENGINE SCRIPT --- */
 
     function getPheno(genotype) {
         const hasW = genotype.substring(0, 2).includes('W');
